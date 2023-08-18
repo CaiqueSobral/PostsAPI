@@ -1,5 +1,6 @@
 package com.postsapi.posts.resources;
 
+import com.postsapi.posts.domain.Post;
 import com.postsapi.posts.domain.User;
 import com.postsapi.posts.domain.dto.UserDTO;
 import com.postsapi.posts.services.UserService;
@@ -35,6 +36,14 @@ public class UserResource {
 
         return ResponseEntity.ok(new UserDTO(obj));
     }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User obj = userService.findById(id);
+
+        return ResponseEntity.ok(obj.getPosts());
+    }
+
 
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody UserDTO objDTO){
